@@ -227,6 +227,27 @@ int main() {
 			ftoggle = 0;
 		}
 			break;
+		case 'q':
+			return 0;
+			break;
+		case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8': case '9':
+		{
+			int multiple = command - '0';
+			for (int i = 0; i < 2; i++) {
+				for (int j = 0; j < 4; j++) {
+					for (int k = 0; k < 4; k++) {
+						if (tmatrix[i][j][k] % multiple == 0) {
+							std::cout << tmatrix[i][j][k] << ' ';
+						}
+						else {
+							std::cout << "  ";
+						}
+					}
+					std::cout << '\n';
+				}
+				std::cout << '\n';
+			}
+		}
 		default:
 			break;
 		}
