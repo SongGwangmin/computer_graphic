@@ -41,6 +41,10 @@ twoint determinant(int matrix[2][4][4]) {
 
 
 	twoint result{};
+
+	result.oneint = det[0];
+	result.twoint = det[1];
+
 	return result;
 }
 
@@ -156,7 +160,27 @@ int main() {
 			}
 		}
 			break;
+		case 'r':
+		{
+			twoint result = determinant(tmatrix);
 
+			std::cout << "determinant 1: " << result.oneint << '\n';
+			std::cout << "determinant 2: " << result.twoint << '\n';
+		}
+			break;
+		case 'b':
+		{
+			for (int i = 0; i < 2; i++) {
+				for (int j = 0; j < 4; j++) {
+					for (int k = 0; k < 4; k++) {
+						std::cout << tmatrix[i][j][k] << ' ';
+					}
+					std::cout << '\n';
+				}
+				std::cout << '\n';
+			}
+		}
+			break;
 		default:
 			break;
 		}
