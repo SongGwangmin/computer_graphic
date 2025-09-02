@@ -113,6 +113,8 @@ int main() {
 			}
 		}
 
+		int pulltest{};
+
 		std::cout << "m. 곱셈, a. 덧셈, d. 뺄셈, r. 행렬식\nt. 전치 행렬, e. 최소값 빼기, f. 최대값 더하기\n(1 ~ 9). 입력받은 숫자의 배수만 출력, s. 행렬 재설정, q. 프로그램 종료 \nCommand: ";
 
 		std::cin >> command;
