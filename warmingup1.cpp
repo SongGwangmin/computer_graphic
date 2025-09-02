@@ -93,7 +93,7 @@ int main() {
 			}
 		}
 
-		if (etoggle) {
+		if (ftoggle) {
 			for (int i = 0; i < 2; i++) {
 				for (int j = 0; j < 4; j++) {
 					for (int k = 0; k < 4; k++) {
@@ -103,7 +103,7 @@ int main() {
 			}
 		}
 
-		if (ftoggle) {
+		if (etoggle) {
 			for (int i = 0; i < 2; i++) {
 				for (int j = 0; j < 4; j++) {
 					for (int k = 0; k < 4; k++) {
@@ -202,11 +202,27 @@ int main() {
 		case 'e':
 		{
 			++etoggle;
+			etoggle %= 2;
 		}
 			break;
 		case 'f':
 		{
 			++ftoggle;
+			ftoggle %= 2;
+		}
+			break;
+		case 's':
+		{
+
+			for (int i = 0; i < 2; i++) {
+				for (int j = 0; j < 4; j++) {
+					for (int k = 0; k < 4; k++) {
+						matrix[i][j][k] = uid(dre);
+					}
+				}
+			}
+			etoggle = 0;
+			ftoggle = 0;
 		}
 			break;
 		default:
