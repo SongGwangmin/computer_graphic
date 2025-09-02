@@ -181,6 +181,24 @@ int main() {
 			}
 		}
 			break;
+		case 't':
+		{
+			for (int i = 0; i < 2; i++) {
+				for (int j = 0; j < 4; j++) {
+					for (int k = 0; k < 4; k++) {
+						if (j == k) {
+							std::cout << tmatrix[i][j][k] << ' ';
+						}
+						else {
+							std::cout << tmatrix[i][k][j] << ' ';
+						}
+					}
+					std::cout << '\n';
+				}
+				std::cout << '\n';
+			}
+		}
+			break;
 		default:
 			break;
 		}
