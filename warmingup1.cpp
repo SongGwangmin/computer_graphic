@@ -199,6 +199,16 @@ int main() {
 			}
 		}
 			break;
+		case 'e':
+		{
+			++etoggle;
+		}
+			break;
+		case 'f':
+		{
+			++ftoggle;
+		}
+			break;
 		default:
 			break;
 		}
