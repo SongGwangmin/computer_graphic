@@ -43,8 +43,8 @@ int main() {
 	int linenummode = 0; // 0: 원래, 1: 숫자 뒤 문장 다음 줄
 	int sortmode = 0; // 0: 원래, 1: 오름차순, 2: 내림차순
 	int highlightmode = 0; // 0: 원래, 1: 특정 단어 강조 및 개수 출력
-
-
+	int highlightindex = -1; // 강조할 단어 인덱스
+    std::string newstring;
 	fout.open("data.txt");
 
 	if (fout) {
@@ -185,10 +185,24 @@ int main() {
         for (int i = 0; i < count; ++i) {
             SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15); // idle
 
-				int wordcount = 0;
+            
+
+			int wordcount = 0;
             for (int j = 0; j < words_copy[i].size(); ++j) {
 				//std::cout << words[i][j];
-
+				int savecolor = 15;
+				int highlightcont = 0;
+                if (highlightmode) {
+					std::string newcopy = words_copy[i][j];
+					// 대소문자 구분 없이 찾기
+					std::transform(newcopy.begin(), newcopy.end(), newcopy.begin(), ::tolower);
+					std::transform(newstring.begin(), newstring.end(), newstring.begin(), ::tolower);
+					// 강조할 단어가 포함된 단어 찾기
+                    if (newcopy.find(newstring) != std::string::npos) {
+						highlightindex = newcopy.find(newstring);
+                        highlightcont = 1;
+                    }
+                }
                 
                 if (words_copy[i][j][0] == ' ' || words_copy[i][j].compare("/") == 0 || words_copy[i][j].length() == 0) {
 
@@ -205,6 +219,7 @@ int main() {
 					captalcount++;
                     if (capitalmode) {
                         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12); // red
+						savecolor = 12;
                     }
                 }
                 
@@ -219,6 +234,7 @@ int main() {
                             captalcount++;
                             if (capitalmode) {
                                 SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12); // red
+								savecolor = 12;
                             }
                         }
                     }
@@ -226,11 +242,25 @@ int main() {
 
 
                 for (int k = 0; k < words_copy[i][j].size(); ++k) {
-					std::cout << words_copy[i][j][k];
+                    if (highlightmode && highlightcont) {
+                        if (k >= highlightindex && k <= highlightindex + newstring.length() - 1) {
+                            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 11);
+                        }
+                    }
+					
+                    std::cout << words_copy[i][j][k];
                     if (linenummode && words_copy[i][j][k] <= '9' && words_copy[i][j][k] >= '0') {
 						std::cout << std::endl;
                     }
+
+                    if (highlightmode) {
+                        
+                        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), savecolor);
+                        
+                    }
                 }
+
+                highlightcont = 0;
 
                 SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
 
@@ -336,8 +366,8 @@ int main() {
         {
 
             if (highlightmode == 0) {
-                std::string newstring;
-                std::cout << "바꾸고 싶은 문자와 새 문자 입력: ";
+                
+                std::cout << "바꾸고 싶은 문자 입력: ";
                 std::cin >> newstring;
                 std::cin.ignore();
 
