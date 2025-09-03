@@ -101,13 +101,41 @@ int main() {
         // 공백 변환
        if (spacemode) {
             for (int i = 0; i < count; ++i) {
-                for (int j = 0; j < words[i].size(); ++j) {
-                    if(words[i][j][0] == ' '){
-						words[i][j] = "/";
+                for (int j = 0; j < words_copy[i].size(); ++j) {
+                    if(words_copy[i][j][0] == ' '){
+                        words_copy[i][j] = "/";
 					}
                 }
             }
         }
+       
+       // 문자 변환
+       if (charchangemode) {
+           for (int i = 0; i < count; ++i) {
+               for (int j = 0; j < words[i].size(); ++j) {
+                   for (int k = 0; k < words[i][j].size(); ++k) {
+                       if (std::toupper(words_copy[i][j][k]) == std::toupper(oldchar)) {
+						   
+                           if (words_copy[i][j][k] < 'z' && words_copy[i][j][k] > 'a') {
+                               words_copy[i][j][k] = std::tolower(newchar);
+                           }
+                           else {
+                               words_copy[i][j][k] = std::toupper(newchar);
+						   }
+                       }
+                   }
+               }
+           }
+       }
+
+       // 문장 순서 뒤집기
+       if (wordordermode) {
+           for (int i = 0; i < count; ++i) {
+               std::reverse(words_copy[i].begin(), words_copy[i].end());
+           }
+       }
+
+
 
         // 출력
 		std::cout << "----------------------------------------" << std::endl;
