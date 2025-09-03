@@ -15,8 +15,17 @@ int main() {
 	std::vector<std::string> words[10];
 
 	std::ifstream fout;
-
+    char oldchar{}, newchar{};
 	int uppermode = 0; // 0: 원래, 1: 대문자
+	int wordnummode = 0; // 0: 원래, 1: 단어 개수 출력
+	int capitalmode = 0; // 0: 원래, 1: 대문자 강조
+	int wordreversemode = 0; // 0: 원래, 1: 거꾸로 출력
+	int wordordermode = 0; // 0: 원래, 1: 단어 순서 거꾸로
+	int spacemode = 0; // 0: 원래, 1: 공백을 '/'로
+	int charchangemode = 0; // 0: 원래, 1: 문자 바꾸기
+	int linenummode = 0; // 0: 원래, 1: 숫자 뒤 문장 다음 줄
+	int sortmode = 0; // 0: 원래, 1: 오름차순, 2: 내림차순
+	int highlightmode = 0; // 0: 원래, 1: 특정 단어 강조 및 개수 출력
 
 
 	fout.open("data.txt");
@@ -83,8 +92,22 @@ int main() {
 			}
             words[i].push_back(strcat);
         }
-
-
+        // 처리
+        // 벡터 복사    
+		std::vector<std::string> words_copy[10];
+        for (int i = 0; i < count; ++i) {
+            words_copy[i] = words[i];
+		}
+        // 공백 변환
+       if (spacemode) {
+            for (int i = 0; i < count; ++i) {
+                for (int j = 0; j < words[i].size(); ++j) {
+                    if(words[i][j][0] == ' '){
+						words[i][j] = "/";
+					}
+                }
+            }
+        }
 
         // 출력
 		std::cout << "----------------------------------------" << std::endl;
@@ -92,7 +115,7 @@ int main() {
             for (int j = 0; j < words[i].size(); ++j) {
 				//std::cout << words[i][j];
                 for (int k = 0; k < words[i][j].size(); ++k) {
-					std::cout << words[i][j][k];
+					std::cout << words_copy[i][j][k];
                 }
 
                 //::toupper(words[i][j][0]);
@@ -119,52 +142,88 @@ int main() {
         switch (command) {
         case 'a':
         {
-
+			++uppermode;
+			uppermode %= 2;
         }
             break;
         case 'b':
         {
+			++wordnummode;
+			wordnummode %= 2;
 
         }
             break;
         case 'c':
         {
+			++capitalmode;
+			capitalmode %= 2;
+
 
         }
             break;
         case 'd':
         {
+			++wordreversemode;
+			wordreversemode %= 2;
+            ++wordordermode;
+			wordordermode %= 2;
             
         }
             break;
         case 'e':
         {
-
+			++spacemode;
+			spacemode %= 2;
         }
             break;
         case 'f':
         {
-
+			++wordordermode;
+			wordordermode %= 2;
         }
             break;
         case 'g':
         {
 
+            if (charchangemode == 0) {
+				//char oldchar, newchar;
+				std::cout << "바꾸고 싶은 문자와 새 문자 입력: ";
+				std::cin >> oldchar >> newchar;
+				std::cin.ignore();
+
+            }
+
+            ++charchangemode;
+            charchangemode %= 2;
         }
             break;
         case 'h':
         {
+			++linenummode;
+			linenummode %= 2;
 
         }
             break;
         case 'i':
         {
-
+			++sortmode;
+			sortmode %= 3;
         }
             break;
         case 'j':
         {
 
+            if (highlightmode == 0) {
+                std::string newstring;
+                std::cout << "바꾸고 싶은 문자와 새 문자 입력: ";
+                std::cin >> newstring;
+                std::cin.ignore();
+
+            }
+            
+
+            ++highlightmode;
+            highlightmode %= 2;
         }
             break;
         case 'q':
