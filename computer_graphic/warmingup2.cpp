@@ -3,6 +3,8 @@
 #include <fstream>
 #include <string>
 #include <windows.h>
+#include <algorithm>
+#include <cctype>
 
 #define space 1
 #define character 2
@@ -13,6 +15,9 @@ int main() {
 	std::vector<std::string> words[10];
 
 	std::ifstream fout;
+
+	int uppermode = 0; // 0: 원래, 1: 대문자
+
 
 	fout.open("data.txt");
 
@@ -50,7 +55,7 @@ int main() {
 			else div = character;
 
 			std::string strcat = "";
-			std::cout << line[i][line[i].size() - 1] << std::endl;
+			//std::cout << line[i][line[i].size() - 1] << std::endl;
 
             for (int j = 0; j < line[i].size(); ++j) {
                 if (div == space) {
@@ -79,12 +84,18 @@ int main() {
             words[i].push_back(strcat);
         }
 
+
+
+        // 출력
 		std::cout << "----------------------------------------" << std::endl;
         for (int i = 0; i < count; ++i) {
             for (int j = 0; j < words[i].size(); ++j) {
-				std::cout << words[i][j];
+				//std::cout << words[i][j];
+                for (int k = 0; k < words[i][j].size(); ++k) {
+					std::cout << words[i][j][k];
+                }
 
-
+                //::toupper(words[i][j][0]);
             }
 			std::cout << std::endl;
         }
