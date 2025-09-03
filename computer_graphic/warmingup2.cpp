@@ -181,23 +181,51 @@ int main() {
 
         // 출력
 		std::cout << "----------------------------------------" << std::endl;
+			int captalcount = 0; // 대문자 개수 세기
         for (int i = 0; i < count; ++i) {
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15); // idle
+
+				int wordcount = 0;
             for (int j = 0; j < words_copy[i].size(); ++j) {
 				//std::cout << words[i][j];
-                if (sortmode) {
-                    if (words_copy[i][j][0] == ' ' || words_copy[i][j].compare("/") == 0) {
+
+                
+                if (words_copy[i][j][0] == ' ' || words_copy[i][j].compare("/") == 0) {
+
+                    if (sortmode) {
                         continue;
                     }
                 }
+                else {
+					++wordcount;
+                }
+                
+                // 대문자로 시작하는 단어 나올 때
+                if (words_copy[i][j][0] < 'Z' && words_copy[i][j][0] > 'A') {
+					captalcount++;
+                    if (capitalmode) {
+                        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12); // red
+                    }
+                }
+
+
                 for (int k = 0; k < words_copy[i][j].size(); ++k) {
 					std::cout << words_copy[i][j][k];
                 }
 
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+
                 //::toupper(words[i][j][0]);
             }
+                if (wordnummode && wordcount) {
+					std::cout << "    ---------(" << wordcount << ")";
+                }
 			std::cout << std::endl;
         }
-        // 문자 출력
+            // 대문자 개수 출력
+            if (capitalmode) {
+				std::cout << "대문자 개수: " << captalcount << std::endl;
+            }
 
         // 메뉴 출력
 		std::cout << "a: 모든 문장을 대문자로 / 원래대로" << std::endl;
