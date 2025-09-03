@@ -198,7 +198,10 @@ int main() {
 					std::transform(newcopy.begin(), newcopy.end(), newcopy.begin(), ::tolower);
 					std::transform(newstring.begin(), newstring.end(), newstring.begin(), ::tolower);
 
-                    //
+					// 단어 뒤집혀도 찾기
+                    if (wordreversemode) {
+                        std::reverse(newstring.begin(), newstring.end());
+                    }
 
 					// 강조할 단어가 포함된 단어 찾기
                     if (newcopy.find(newstring) != std::string::npos) {
