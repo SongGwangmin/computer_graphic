@@ -197,6 +197,9 @@ int main() {
 					// 대소문자 구분 없이 찾기
 					std::transform(newcopy.begin(), newcopy.end(), newcopy.begin(), ::tolower);
 					std::transform(newstring.begin(), newstring.end(), newstring.begin(), ::tolower);
+
+                    //
+
 					// 강조할 단어가 포함된 단어 찾기
                     if (newcopy.find(newstring) != std::string::npos) {
 						highlightindex = newcopy.find(newstring);
@@ -248,7 +251,13 @@ int main() {
                         }
                     }
 					
-                    std::cout << words_copy[i][j][k];
+                    if (uppermode) {
+                        char ch = std::toupper(words_copy[i][j][k]);
+                        std::cout << ch;
+                    }
+                    else {
+                        std::cout << words_copy[i][j][k];
+                    }
                     if (linenummode && words_copy[i][j][k] <= '9' && words_copy[i][j][k] >= '0') {
 						std::cout << std::endl;
                     }
