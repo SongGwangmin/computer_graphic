@@ -9,6 +9,23 @@
 #define space 1
 #define character 2
 
+int countalphbet(const std::string str) {
+	int count = 0;
+    if (str[0] == ' ') {
+        return -1;
+    }
+    else if (str.compare("/") == 0) {
+		return -1;
+    }
+
+    for (int i = 0; i < str.size(); ++i) {
+        if (isalpha(str[i])) {
+            ++count;
+        }
+    }
+    return count;
+}
+
 int main() {
 	std::string line[10];
 
@@ -144,11 +161,34 @@ int main() {
            }
        }
 
+       // 단어 정렬
+       if (sortmode) {
+
+           for (int i = 0; i < count; ++i) {
+               if (sortmode == 1) {
+                   std::sort(words_copy[i].begin(), words_copy[i].end(), [](const std::string& a, const std::string& b) {
+                       return countalphbet(a) < countalphbet(b);
+                       });
+               }
+               else if (sortmode == 2) {
+                   std::sort(words_copy[i].begin(), words_copy[i].end(), [](const std::string& a, const std::string& b) {
+                       return countalphbet(a) > countalphbet(b);
+                       });
+			   }
+           }
+
+       }
+
         // 출력
 		std::cout << "----------------------------------------" << std::endl;
         for (int i = 0; i < count; ++i) {
             for (int j = 0; j < words_copy[i].size(); ++j) {
 				//std::cout << words[i][j];
+                if (sortmode) {
+                    if (words_copy[i][j][0] == ' ' || words_copy[i][j].compare("/") == 0) {
+                        continue;
+                    }
+                }
                 for (int k = 0; k < words_copy[i][j].size(); ++k) {
 					std::cout << words_copy[i][j][k];
                 }
