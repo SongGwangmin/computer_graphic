@@ -133,7 +133,7 @@ int main() {
                    for (int k = 0; k < words[i][j].size(); ++k) {
                        if (std::toupper(words_copy[i][j][k]) == std::toupper(oldchar)) {
 						   
-                           if (words_copy[i][j][k] < 'z' && words_copy[i][j][k] > 'a') {
+                           if (words_copy[i][j][k] <= 'z' && words_copy[i][j][k] >= 'a') {
                                words_copy[i][j][k] = std::tolower(newchar);
                            }
                            else {
@@ -201,10 +201,26 @@ int main() {
                 }
                 
                 // 대문자로 시작하는 단어 나올 때
-                if (words_copy[i][j][0] < 'Z' && words_copy[i][j][0] > 'A') {
+                if (words_copy[i][j][0] <= 'Z' && words_copy[i][j][0] >= 'A' && !wordreversemode) {
 					captalcount++;
                     if (capitalmode) {
                         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12); // red
+                    }
+                }
+                
+
+                if (wordreversemode) {
+                    if (words_copy[i][j][0] == ' ' || words_copy[i][j].compare("/") == 0 || words_copy[i][j].length() == 0) {
+
+                    }
+                    else {
+						//char firstchar = words_copy[i][j][words_copy[i][j].length() - 1];
+                        if (words_copy[i][j][words_copy[i][j].length() - 1] <= 'Z' && words_copy[i][j][words_copy[i][j].length() - 1] >= 'A') {
+                            captalcount++;
+                            if (capitalmode) {
+                                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12); // red
+                            }
+                        }
                     }
                 }
 
