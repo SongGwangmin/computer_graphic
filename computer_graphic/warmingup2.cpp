@@ -190,7 +190,7 @@ int main() {
 				//std::cout << words[i][j];
 
                 
-                if (words_copy[i][j][0] == ' ' || words_copy[i][j].compare("/") == 0) {
+                if (words_copy[i][j][0] == ' ' || words_copy[i][j].compare("/") == 0 || words_copy[i][j].length() == 0) {
 
                     if (sortmode) {
                         continue;
@@ -227,6 +227,9 @@ int main() {
 
                 for (int k = 0; k < words_copy[i][j].size(); ++k) {
 					std::cout << words_copy[i][j][k];
+                    if (linenummode && words_copy[i][j][k] <= '9' && words_copy[i][j][k] >= '0') {
+						std::cout << std::endl;
+                    }
                 }
 
                 SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
