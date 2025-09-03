@@ -135,14 +135,21 @@ int main() {
            }
        }
 
-
+	   // 단어 뒤집기
+       if (wordreversemode) {
+           for (int i = 0; i < count; ++i) {
+               for (int j = 0; j < words_copy[i].size(); ++j) {
+                   std::reverse(words_copy[i][j].begin(), words_copy[i][j].end());
+               }
+           }
+       }
 
         // 출력
 		std::cout << "----------------------------------------" << std::endl;
         for (int i = 0; i < count; ++i) {
-            for (int j = 0; j < words[i].size(); ++j) {
+            for (int j = 0; j < words_copy[i].size(); ++j) {
 				//std::cout << words[i][j];
-                for (int k = 0; k < words[i][j].size(); ++k) {
+                for (int k = 0; k < words_copy[i][j].size(); ++k) {
 					std::cout << words_copy[i][j][k];
                 }
 
@@ -206,8 +213,8 @@ int main() {
             break;
         case 'f':
         {
-			++wordordermode;
-			wordordermode %= 2;
+			++wordreversemode;
+            wordreversemode %= 2;
         }
             break;
         case 'g':
