@@ -1,5 +1,9 @@
 #include <iostream>
 #include <string>
+#include <algorithm>
+#include <vector>
+#include <sstream>
+
 struct Point {
     int x;
     int y;
@@ -55,19 +59,35 @@ int main() {
 		std::string command{};
         std::string argument[3];
 
-		std::cin >> command;
+		std::getline(std::cin, command);
+        //std::cin.getline(command, std::cin);
+		//std::cin >> command;
 		std::cin.ignore();
 
-        switch (command[0]) {
+		std::istringstream iss(command);
+		std::vector<std::string> tokens;
+		std::string token;
+
+        while (iss >> token) {
+            tokens.push_back(token);
+        }
+        
+        for (auto& i : tokens) {
+			std::cout << i << std::endl;
+        }
+        
+
+        switch (tokens[0][0]) {
             case '+':
             {
-                if (command.size() < 5) {
-                    std::cout << "잘못된 명령어입니다." << std::endl;
-                    break;
+                if (tokens.size() < 4) {
+					std::cout << "argumnent가 부족합니다." << std::endl;
+					break;
                 }
-                int x = std::stoi(command.substr(2, command.find(' ', 2) - 2));
-                int y = std::stoi(command.substr(command.find(' ', 2) + 1, command.find(' ', command.find(' ', 2) + 1) - command.find(' ', 2) - 1));
-                int z = std::stoi(command.substr(command.find(' ', command.find(' ', 2) + 1) + 1));
+				int x = std::stoi(tokens[1]);
+				int y = std::stoi(tokens[2]);
+				int z = std::stoi(tokens[3]);
+
                 // 맨 위에 추가
                 for (int i = 9; i > 0; --i) {
                     points[i] = points[i - 1];
