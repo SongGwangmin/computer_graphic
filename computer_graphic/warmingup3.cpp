@@ -19,6 +19,59 @@ void printPoint(const Point& p) {
     }
 }
 
+int downinsert(Point* list, int x, int y, int z) {
+    int index = 9;
+
+    while (index > -1) {
+        if (list[index].active == true) {
+            break;
+        }
+		index--;
+    }
+
+    if (index == 9) {
+		return -1;
+    }
+    
+    else {
+		list[index + 1].x = x;
+		list[index + 1].y = y;
+		list[index + 1].z = z;
+		list[index + 1].active = true;
+
+        return index + 1;
+    }
+
+}
+
+int upinsert(Point* list, int x, int y, int z) {
+    int index = 0;
+    while (index < 10) {
+        if (list[index].active == false) {
+            break;
+        }
+        index++;
+    }
+
+    if (index == 10) {
+        return -1;
+    }
+    else {
+        for (int i = 0; i < index; ++i) {
+			list[index - i].x = list[index - i - 1].x;
+			list[index - i].y = list[index - i - 1].y;
+            list[index - i].z = list[index - i - 1].z;
+			list[index - i].active = true;
+
+        }
+		list[0].x = x;
+		list[0].y = y;
+		list[0].z = z;
+        list[0].active = true;
+		return index;
+    }
+}
+
 int main() {
     // 구조체 배열 10개 생성 및 초기화
     Point points[10] = {
@@ -60,9 +113,6 @@ int main() {
         std::string argument[3];
 
 		std::getline(std::cin, command);
-        //std::cin.getline(command, std::cin);
-		//std::cin >> command;
-		//std::cin.ignore();
 
 		std::istringstream iss(command);
 		std::vector<std::string> tokens;
@@ -72,9 +122,9 @@ int main() {
             tokens.push_back(token);
         }
         
-        for (auto& i : tokens) {
+       /* for (auto& i : tokens) {
 			std::cout << i << std::endl;
-        }
+        }*/
         
 
         switch (tokens[0][0]) {
@@ -114,13 +164,13 @@ int main() {
                 }
 
                 // 맨 위에 추가
-                for (int i = 9; i > 0; --i) {
-                    points[i] = points[i - 1];
+				int result = downinsert(points, x, y, z);
+                if (result == -1) {
+					result = upinsert(points, x, y, z);
+                    if (result == -1) {
+                        std::cout << "더 이상 추가할 수 없습니다." << std::endl;
+                    }
                 }
-                points[0].x = x;
-                points[0].y = y;
-                points[0].z = z;
-                points[0].active = true;
 			}
             break;
             case '-':
@@ -137,18 +187,43 @@ int main() {
             break;
             case 'e':
             {
-                if (command.size() < 5) {
+                if (tokens.size() < 4) {
+                    std::cout << "argumnent가 부족합니다." << std::endl;
+                    break;
+                }
+
+                int x, y, z;
+
+                try {
+                    x = std::stoi(tokens[1]);
+                }
+                catch (const std::invalid_argument&) {
                     std::cout << "잘못된 명령어입니다." << std::endl;
                     break;
                 }
-                int x = std::stoi(command.substr(2, command.find(' ', 2) - 2));
-                int y = std::stoi(command.substr(command.find(' ', 2) + 1, command.find(' ', command.find(' ', 2) + 1) - command.find(' ', 2) - 1));
-                int z = std::stoi(command.substr(command.find(' ', command.find(' ', 2) + 1) + 1));
-                // 맨 아래에 추가
-                points[9].x = x;
-                points[9].y = y;
-                points[9].z = z;
-                points[9].active = true;
+
+                try {
+                    y = std::stoi(tokens[2]);
+
+                }
+                catch (const std::invalid_argument&) {
+                    std::cout << "잘못된 명령어입니다." << std::endl;
+                    break;
+                }
+
+                try {
+                    z = std::stoi(tokens[3]);
+
+                }
+                catch (const std::invalid_argument&) {
+                    std::cout << "잘못된 명령어입니다." << std::endl;
+                    break;
+                }
+                
+                int result = upinsert(points, x, y, z);
+                if (result == -1) {
+                    std::cout << "더 이상 추가할 수 없습니다." << std::endl;
+                }
 			}
             break;
             case 'd':
