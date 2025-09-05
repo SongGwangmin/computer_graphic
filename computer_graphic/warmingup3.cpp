@@ -12,6 +12,24 @@ struct Point {
     bool active;
 };
 
+int delpoint(Point* list, int x, int y, int z) {
+	int index = 0;
+
+    while (index < 10) {
+        if (list[index].active == true) {
+            break;
+        }
+        index++;
+    }
+
+    if (index == 10) {
+        return -1;
+    }
+    else {
+		list[index].active = false;
+    }
+}
+
 void printPoint(const Point& p) {
     std::cout << p.index << ": ";
     if (p.active) {
@@ -84,7 +102,7 @@ int main() {
 		p.y = 0;
 		p.z = 0;
         p.index = i;
-		p.active = false;
+		p.active = true;
 		i++;
     }
 
@@ -175,14 +193,10 @@ int main() {
             break;
             case '-':
             {
-                // 맨 위에서 삭제
-                for (int i = 0; i < 9; ++i) {
-                    points[i] = points[i + 1];
+				int result = delpoint(points, 0, 0, 0);
+                if (result == -1) {
+                    std::cout << "삭제할 점이 없습니다." << std::endl;
                 }
-                points[9].x = 0;
-                points[9].y = 0;
-                points[9].z = 0;
-                points[9].active = false;
             }
             break;
             case 'e':
