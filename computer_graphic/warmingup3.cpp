@@ -288,12 +288,21 @@ int main() {
             break;
             case 'b':
             {
-                // 모든 점의 위치를 한 칸씩 감소 (0→9, 1→0, 2→1, ... 9→8)
-                Point first = points[0];
-                for (int i = 0; i < 9; ++i) {
-                    points[i] = points[i + 1];
+				Point temp[10];
+
+                for (int i = 0; i < 10; ++i) {
+					temp[i] = points[i];
                 }
-                points[9] = first;
+
+
+                for (int i = 0; i < 10; ++i) {
+					points[i].x = temp[(i + 1) % 10].x;
+                    points[i].y = temp[(i + 1) % 10].y;
+					points[i].z = temp[(i + 1) % 10].z;
+					points[i].active = temp[(i + 1) % 10].active;
+
+                }
+				
             }
 			break;
             case 'c':
