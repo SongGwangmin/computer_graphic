@@ -30,6 +30,24 @@ int delpoint(Point* list, int x, int y, int z) {
     }
 }
 
+int delpointdown(Point* list, int x, int y, int z) {
+    int index = 9;
+
+    while (index > -1) {
+        if (list[index].active == true) {
+            break;
+        }
+        index--;
+    }
+
+    if (index == -1) {
+        return -1;
+    }
+    else {
+        list[index].active = false;
+    }
+}
+
 void printPoint(const Point& p) {
     std::cout << p.index << ": ";
     if (p.active) {
@@ -95,6 +113,8 @@ int main() {
     Point points[10] = {
     };
 
+	int atoggle = 0;
+
 	int i = 0;
 
     for (Point& p : points) {
@@ -102,18 +122,27 @@ int main() {
 		p.y = 0;
 		p.z = 0;
         p.index = i;
-		p.active = true;
+		p.active = false;
 		i++;
     }
 
     while (true) {
         // 확인 출력
+
+		int pcount = 0;
+
         for (int i = 0; i < 10; i++) {
             
             printPoint(points[9 - i]);
             std::cout << std::endl;
-        }
 
+            if (points[i].active == true) {
+				++pcount;
+            }
+        }
+        if (atoggle) {
+            std::cout << "현재 점의 개수: " << pcount << std::endl;
+        }
         // command
         std::cout << "===== 명령어 목록 =====" << std::endl;
         std::cout << "+ x y z : 리스트의 맨 위에 점 (x, y, z) 추가" << std::endl;
@@ -126,6 +155,8 @@ int main() {
         std::cout << "f       : 원점과의 거리 기준 정렬 (오름차순)" << std::endl;
         std::cout << "q       : 프로그램 종료" << std::endl;
         std::cout << "========================" << std::endl;
+
+        
 
 		std::string command{};
         std::string argument[3];
@@ -193,7 +224,10 @@ int main() {
             break;
             case '-':
             {
-				
+                int result = delpointdown(points, 0, 0, 0);
+                if (result == -1) {
+                    std::cout << "삭제할 점이 없습니다." << std::endl;
+                }
             }
             break;
             case 'e':
@@ -247,14 +281,9 @@ int main() {
             break;
             case 'a':
             {
-                // 저장된 점의 개수 출력
-                int count = 0;
-                for (const Point& p : points) {
-                    if (p.active) {
-                        count++;
-                    }
-                }
-                std::cout << "저장된 점의 개수: " << count << std::endl;
+                ++atoggle;
+				atoggle %= 2;
+
             }
             break;
             case 'b':
