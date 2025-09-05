@@ -114,6 +114,7 @@ int main() {
     };
 
 	int atoggle = 0;
+	int ftoggle = 0;
 
 	int i = 0;
 
@@ -131,13 +132,47 @@ int main() {
 
 		int pcount = 0;
 
-        for (int i = 0; i < 10; i++) {
-            
-            printPoint(points[9 - i]);
-            std::cout << std::endl;
+		Point temp[10];
 
-            if (points[i].active == true) {
-				++pcount;
+        for (int i = 0; i < 10; i++) {
+			temp[i] = points[i];
+
+        }
+
+        std::sort(temp, temp + 10, [](const Point& a, const Point& b) {
+            if (!a.active && b.active) return false;
+            if (a.active && !b.active) return true;
+            if (!a.active && !b.active) return false; // 둘 다 비활성화된 경우 순서 유지
+            int distA = a.x * a.x + a.y * a.y + a.z * a.z;
+            int distB = b.x * b.x + b.y * b.y + b.z * b.z;
+            return distA < distB;
+			});
+
+        for (int i = 0; i < 10; i++) {
+            temp[i].index = i;
+
+        }
+
+        if (ftoggle) {
+            for (int i = 0; i < 10; i++) {
+
+                printPoint(temp[9 - i]);
+                std::cout << std::endl;
+
+                if (points[i].active == true) {
+                    ++pcount;
+                }
+            }
+        }
+        else {
+            for (int i = 0; i < 10; i++) {
+
+                printPoint(points[9 - i]);
+                std::cout << std::endl;
+
+                if (points[i].active == true) {
+                    ++pcount;
+                }
             }
         }
         if (atoggle) {
@@ -319,14 +354,8 @@ int main() {
             case 'f':
             {
                 // 원점과의 거리 기준 정렬 (오름차순)
-                std::sort(points, points + 10, [](const Point& a, const Point& b) {
-                    if (!a.active && b.active) return false;
-                    if (a.active && !b.active) return true;
-                    if (!a.active && !b.active) return false; // 둘 다 비활성화된 경우 순서 유지
-                    int distA = a.x * a.x + a.y * a.y + a.z * a.z;
-                    int distB = b.x * b.x + b.y * b.y + b.z * b.z;
-                    return distA < distB;
-                    });
+				++ftoggle;
+				ftoggle %= 2;
             }
             break;
             case 'q':
