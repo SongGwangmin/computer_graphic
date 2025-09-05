@@ -62,7 +62,7 @@ int main() {
 		std::getline(std::cin, command);
         //std::cin.getline(command, std::cin);
 		//std::cin >> command;
-		std::cin.ignore();
+		//std::cin.ignore();
 
 		std::istringstream iss(command);
 		std::vector<std::string> tokens;
@@ -84,9 +84,34 @@ int main() {
 					std::cout << "argumnent가 부족합니다." << std::endl;
 					break;
                 }
-				int x = std::stoi(tokens[1]);
-				int y = std::stoi(tokens[2]);
-				int z = std::stoi(tokens[3]);
+				
+                int x, y, z;
+                
+                try {
+					x = std::stoi(tokens[1]);
+                }
+				catch (const std::invalid_argument&) {
+                    std::cout << "잘못된 명령어입니다." << std::endl;
+                    break;
+				}
+
+                try {
+				    y = std::stoi(tokens[2]);
+
+                }
+                catch (const std::invalid_argument&) {
+                    std::cout << "잘못된 명령어입니다." << std::endl;
+                    break;
+				}
+
+                try {
+                    z = std::stoi(tokens[3]);
+
+                }
+                catch (const std::invalid_argument&) {
+                    std::cout << "잘못된 명령어입니다." << std::endl;
+                    break;
+                }
 
                 // 맨 위에 추가
                 for (int i = 9; i > 0; --i) {
