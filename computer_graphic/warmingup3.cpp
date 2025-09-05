@@ -193,10 +193,7 @@ int main() {
             break;
             case '-':
             {
-				int result = delpoint(points, 0, 0, 0);
-                if (result == -1) {
-                    std::cout << "삭제할 점이 없습니다." << std::endl;
-                }
+				
             }
             break;
             case 'e':
@@ -242,11 +239,10 @@ int main() {
             break;
             case 'd':
             {
-                // 맨 아래에서 삭제 (칸이 비게 됨)
-                points[9].x = 0;
-                points[9].y = 0;
-                points[9].z = 0;
-                points[9].active = false;
+                int result = delpoint(points, 0, 0, 0);
+                if (result == -1) {
+                    std::cout << "삭제할 점이 없습니다." << std::endl;
+                }
 			}
             break;
             case 'a':
