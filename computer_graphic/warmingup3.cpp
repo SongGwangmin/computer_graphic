@@ -122,7 +122,7 @@ int main() {
 		p.y = 0;
 		p.z = 0;
         p.index = i;
-		p.active = false;
+		p.active = true;
 		i++;
     }
 
