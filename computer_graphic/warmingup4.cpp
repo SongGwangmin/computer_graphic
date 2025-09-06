@@ -22,7 +22,8 @@ int main() {
 	cardlist[24] = '@';
 
 	char board[5][5]{};
-
+	int matched = 0;
+	int count = 20;
 
 	for (int i = 0; i < 25; ++i) {
 		std::cout << cardlist[i] << ' ';
@@ -48,6 +49,15 @@ int main() {
 	char command1x[2], command1y[2];
 
 	while (1) {
+		if (matched == 13) {
+			std::cout << "모든 카드를 맞추셨습니다! 게임 종료!" << std::endl;
+			break;
+		}
+		if (count == 0) {
+			std::cout << "입력 횟수를 모두 사용하셨습니다! 게임 종료!" << std::endl;
+			break;
+		}
+
 		system("cls");
 		std::cout << "   a  b  c  d  e " << std::endl;
 
@@ -89,6 +99,9 @@ int main() {
 			continue;
 		}
 		
+		std::cout << std::endl << "남은 입력 횟수: " << count;
+
+
 		// 커맨드 입력
 		std::cout << std::endl << "좌표 입력 (예: a 1): ";
 
@@ -132,6 +145,7 @@ int main() {
 					board[command1y[1] - '1'][command1x[1] - 'a'] = '2';
 					cardlist[(command1y[0] - '1') * 5 + (command1x[0] - 'a')] = toupper(cardlist[(command1y[0] - '1') * 5 + (command1x[0] - 'a')]);
 					cardlist[(command1y[1] - '1') * 5 + (command1x[1] - 'a')] = toupper(cardlist[(command1y[1] - '1') * 5 + (command1x[1] - 'a')]);
+					++matched;
 				}
 				else if (cardlist[(command1y[1] - '1') * 5 + (command1x[1] - 'a')] == '@' || cardlist[(command1y[0] - '1') * 5 + (command1x[0] - 'a')] == '@') {
 					std::cout << "같은 카드입니다!" << std::endl;
@@ -139,12 +153,13 @@ int main() {
 					board[command1y[1] - '1'][command1x[1] - 'a'] = '2';
 					cardlist[(command1y[0] - '1') * 5 + (command1x[0] - 'a')] = toupper(cardlist[(command1y[0] - '1') * 5 + (command1x[0] - 'a')]);
 					cardlist[(command1y[1] - '1') * 5 + (command1x[1] - 'a')] = toupper(cardlist[(command1y[1] - '1') * 5 + (command1x[1] - 'a')]);
+					++matched;
 				}
 				else {
 					std::cout << "다른 카드입니다!" << std::endl;
 				}
 			}
-
+			--count;
 			++turn;
 		}
 		else if (tokens.size() == 1) {
@@ -236,6 +251,32 @@ int main() {
 
 		++turn;*/
 	}
+	for (int i = 0; i < 25; ++i) {
+		if (i % 5 == 0) {
+			std::cout << std::endl;
+			std::cout << i / 5 + 1 << "  ";
+		}
+
+		if (board[i / 5][i % 5] != '*') {
+
+			if (cardlist[i] == '@') {
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 13);
+			}
+			else {
+				char color = toupper(cardlist[i]);
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (color - 'A') + 1);
+			}
+
+			std::cout << cardlist[i] << "  ";
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+		}
+		else {
+			std::cout << board[i / 5][i % 5] << "  ";
+		}
+
+	}
+
+	std::cout << "최종 스코어: " << matched << std::endl;
 
 	return 0;
 }
