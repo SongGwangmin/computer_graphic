@@ -173,6 +173,27 @@ int main() {
 
 				Sleep(3000);
 			}
+			else if(tokens[0][0] == 'q') {
+				break;
+			}
+			else if (tokens[0][0] == 'r') {
+				turn = 0;
+				for (int i = 0; i < 25; ++i) {
+					board[i / 5][i % 5] = '*';
+				}
+				for (int i = 0; i < 10000; ++i) {
+					int a = dist(gen);
+					int b = dist(gen);
+					char temp = cardlist[a];
+					cardlist[a] = cardlist[b];
+					cardlist[b] = temp;
+				}
+				for (int i = 0; i < 25; ++i) {
+					if (isupper(cardlist[i])) {
+						cardlist[i] = tolower(cardlist[i]);
+					}
+				}
+			}
 			else {
 				std::cout << "잘못된 명령어입니다. 다시 입력해주세요." << std::endl;
 				Sleep(1000);
