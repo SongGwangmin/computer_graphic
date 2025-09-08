@@ -179,6 +179,18 @@ int main() {
 
        }
 
+	   // 대문자 변환
+       if (uppermode) {
+           for (int i = 0; i < count; ++i) {
+               for (int j = 0; j < words_copy[i].size(); ++j) {
+                   for (int k = 0; k < words_copy[i][j].size(); ++k) {
+					   char ch = std::toupper(words_copy[i][j][k]);
+                       words_copy[i][j][k] = ch;
+                   }
+               }
+           }
+       }
+
         // 출력
 		std::cout << "----------------------------------------" << std::endl;
 			int captalcount = 0; // 대문자 개수 세기
@@ -221,16 +233,103 @@ int main() {
                 }
                 
                 // 대문자로 시작하는 단어 나올 때
-                if (words_copy[i][j][0] <= 'Z' && words_copy[i][j][0] >= 'A' && !wordreversemode) {
-					captalcount++;
-                    if (capitalmode) {
-                        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12); // red
-						savecolor = 12;
+                if (!spacemode) {
+                    if (words_copy[i][j][0] <= 'Z' && words_copy[i][j][0] >= 'A') {
+                        captalcount++;
+                        if (capitalmode) {
+                            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12); // red
+                            savecolor = 12;
+                        }
+                    }
+                    else if (words_copy[i][j][0] > '9' || words_copy[i][j][0] < '0') {
+                        int cnt = 0;
+                        int ch = false;
+                        for (; cnt < words_copy[i][j].size(); ++cnt) {
+                            if (words_copy[i][j][cnt] <= 'Z' && words_copy[i][j][cnt] >= 'A') {
+                                ch = true;
+                                break;
+                            }
+                            else if (words_copy[i][j][cnt] <= '9' && words_copy[i][j][cnt] >= '0') {
+                                ch = false;
+                                break;
+                            }
+                            else if (words_copy[i][j][cnt] <= 'z' && words_copy[i][j][cnt] >= 'a') {
+                                ch = false;
+                                break;
+                            }
+                            else {
+
+                            }
+
+                        }
+
+                        if (words_copy[i][j][cnt] <= 'Z' && words_copy[i][j][cnt] >= 'A') {
+                            captalcount++;
+                            if (capitalmode) {
+                                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12); // red
+                                savecolor = 12;
+                            }
+                        }
                     }
                 }
-                
+                if (capitalmode && spacemode) {
+                    int ccnt = 0;
 
-                if (wordreversemode) {
+					int cch = false;
+                    for (; ccnt < words_copy[i].size(); ++ccnt) {
+                        if (words_copy[i][ccnt][0] == ' ' || words_copy[i][ccnt].compare("/") == 0 || words_copy[i][ccnt].length() == 0) {
+                            
+                        }
+                        else {
+                            break;
+						}
+
+                    }
+                    if (words_copy[i][ccnt][0] <= 'Z' && words_copy[i][ccnt][0] >= 'A') {
+                        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12); // red
+                        savecolor = 12;
+                    }
+                    else if (words_copy[i][ccnt][0] > '9' || words_copy[i][ccnt][0] < '0') {
+                        int cnt = 0;
+                        int ch = false;
+                        for (; cnt < words_copy[i][ccnt].size(); ++cnt) {
+                            if (words_copy[i][ccnt][cnt] <= 'Z' && words_copy[i][ccnt][cnt] >= 'A') {
+                                ch = true;
+                                break;
+                            }
+                            else if (words_copy[i][ccnt][cnt] <= '9' && words_copy[i][ccnt][cnt] >= '0') {
+                                ch = false;
+                                break;
+                            }
+                            else if (words_copy[i][ccnt][cnt] <= 'z' && words_copy[i][ccnt][cnt] >= 'a') {
+                                ch = false;
+                                break;
+                            }
+                            else {
+
+                            }
+
+                        }
+
+                        if (words_copy[i][0][cnt] <= 'Z' && words_copy[i][0][cnt] >= 'A') {
+                            captalcount++;
+                            if (capitalmode) {
+                                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12); // red
+                                savecolor = 12;
+                            }
+                        }
+                    }
+                    else {
+                        if (capitalmode) {
+                            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15); // red
+                            savecolor = 15;
+                        }
+                    }
+
+                }
+
+
+                /*if (wordreversemode) {
                     if (words_copy[i][j][0] == ' ' || words_copy[i][j].compare("/") == 0 || words_copy[i][j].length() == 0) {
 
                     }
@@ -244,7 +343,7 @@ int main() {
                             }
                         }
                     }
-                }
+                }*/
 
 
                 for (int k = 0; k < words_copy[i][j].size(); ++k) {
@@ -254,13 +353,13 @@ int main() {
                         }
                     }
 					
-                    if (uppermode) {
-                        char ch = std::toupper(words_copy[i][j][k]);
-                        std::cout << ch;
-                    }
-                    else {
+                    //if (uppermode) {
+                        //char ch = std::toupper(words_copy[i][j][k]);
+                        //std::cout << ch;
+                    //}
+                    //else {
                         std::cout << words_copy[i][j][k];
-                    }
+                    //}
                     if (linenummode && words_copy[i][j][k] <= '9' && words_copy[i][j][k] >= '0') {
 						std::cout << std::endl;
                     }
@@ -279,6 +378,9 @@ int main() {
                 //::toupper(words[i][j][0]);
             }
                 if (wordnummode && wordcount) {
+                    if (spacemode) {
+                        wordcount = 1;
+                    }
 					std::cout << "    ---------(" << wordcount << ")";
                 }
 			std::cout << std::endl;

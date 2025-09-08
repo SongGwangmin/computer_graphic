@@ -1,6 +1,6 @@
-THis is Computer Graphics Warming-up program.
+THis  is Computer Graphics Warming-up program.
  1 One 2 Two 3 Three 4 Four
- File input output sample program
+     File input output sample program
  2025 Fall semester 3D computer graphics
  Tech University in Korea
  Software College Game and multimedia engineering department
