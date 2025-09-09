@@ -36,7 +36,7 @@ int main() {
     for (int i = 0; i < ARRAY_SIZE; ++i) {
         charArray[i] = '0';
     }
-	charArray[0] = '*'; // 첫 번째 요소는 '*'로 설정
+	//charArray[0] = '*'; // 첫 번째 요소는 '*'로 설정
 
     // 3. 1번 인덱스부터 4개를 'x'로 변경합니다. (인덱스 1, 2, 3, 4)
     for (int i = 1; i <= 4; ++i) {
